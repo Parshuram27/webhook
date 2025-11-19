@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Sheet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f0f2f5;
+      text-align: center;
+    }
+
+    table {
+      margin: 0 auto 30px;
+      border-collapse: collapse;
+      width: 400px;
+    }
+
+    td, th {
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    .present {
+      background-color: #d4edda;
+    }
+
+    #presentList {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Student Attendance</h2>
+
+  <table id="attendanceTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Present</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Parshuram Pathak</td>
+        <td><input type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Ramesh Gupta</td>
+        <td><input type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Vignesh Kapoor</td>
+        <td><input type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Jethalal Gada</td>
+        <td><input type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Iyer Kumar</td>
+        <td><input type="checkbox"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button onclick="submitAttendance()">Submit Attendance</button>
+
+  <div id="presentList"></div>
+
+  <script>
+    function submitAttendance() {
+      const table = document.getElementById("attendanceTable");
+      const rows = table.getElementsByTagName("tbody")[0].rows;
+      let presentStudents = [];
+
+      for (let i = 0; i < rows.length; i++) {
+        const checkbox = rows[i].cells[1].querySelector("input[type='checkbox']");
+        const name = rows[i].cells[0].innerText;
+
+        if (checkbox.checked) {
+          presentStudents.push(name);
+          rows[i].style.backgroundColor = "#d4edda";
+        } else {
+          rows[i].style.backgroundColor = ""; 
+        }
+      }
+
+      const output = document.getElementById("presentList");
+      if (presentStudents.length > 0) {
+        output.innerHTML = "<h3>Present Students:</h3><ul>" + 
+          presentStudents.map(name => `<li>${name}</li>`).join("") + 
+          "</ul>";
+      } else {
+        output.innerHTML = "<p>No students are marked present.</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
